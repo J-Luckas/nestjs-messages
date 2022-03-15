@@ -9,16 +9,9 @@ import {
 import { CreateMessageDTO } from './dtos/create-message.dto';
 import { MessagesService } from './messages.service';
 
-interface ParamRequest {
-  id: string;
-}
-
 @Controller('messages')
 export class MessagesController {
-  messagesService: MessagesService;
-  constructor() {
-    this.messagesService = new MessagesService();
-  }
+  constructor(private messagesService: MessagesService) {}
 
   @Get()
   listMessages() {

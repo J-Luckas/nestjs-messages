@@ -3,9 +3,17 @@ type message = {
   content: string;
 };
 
+import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 
-export class MessagesRepository {
+interface IMessagesRepository {
+  findAll(): Promise<message[]>;
+  findOne(id: string): Promise<message>;
+  create(message: string): Promise<message>;
+}
+
+@Injectable()
+export class MessagesRepository implements IMessagesRepository {
   async findOne(id: string) {
     const contents = await readFile('messages.json', 'utf8');
 
@@ -24,7 +32,7 @@ export class MessagesRepository {
     const messages = JSON.parse(contents);
 
     const newId = messages[messages.length - 1]?.id + 1 || 1;
-    const newMessage = { id: newId, message };
+    const newMessage = { id: newId, content: message };
     messages.push(newMessage);
 
     await writeFile('messages.json', JSON.stringify(messages));
