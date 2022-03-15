@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateMessageDTO } from './dtos/create-message.dto';
+import { MessagesService } from './messages.service';
 
 interface ParamRequest {
   id: string;
@@ -7,27 +8,23 @@ interface ParamRequest {
 
 @Controller('messages')
 export class MessagesController {
+  messagesService: MessagesService;
+  constructor() {
+    this.messagesService = new MessagesService();
+  }
+
   @Get()
-  listMessages(): string {
-    return 'Listing!';
+  listMessages() {
+    return this.messagesService.findAll();
   }
 
   @Post()
-  createMessage(@Body() { content }: CreateMessageDTO): string {
-    return JSON.stringify({
-      message: content,
-    });
+  createMessage(@Body() { content }: CreateMessageDTO) {
+    return this.messagesService.create(content);
   }
 
   @Get(':id')
-  getMessage(
-    @Param('id')
-    { id }: ParamRequest,
-    @Query()
-    { lastName },
-    @Body()
-    { name },
-  ): string {
-    return `Messages to ${id}: ${lastName}, ${name}`;
+  getMessage(@Param('id') id: string) {
+    return this.messagesService.findOne(id);
   }
 }
