@@ -1,3 +1,8 @@
+type message = {
+  id: string;
+  content: string;
+};
+
 import { readFile, writeFile } from 'fs/promises';
 
 export class MessagesRepository {
@@ -6,7 +11,7 @@ export class MessagesRepository {
 
     const messages = JSON.parse(contents);
 
-    return messages.find((m) => m.id == id) || 'Message not found';
+    return messages.find((m: message) => m.id == id) || 'Message not found';
   }
 
   async findAll() {
