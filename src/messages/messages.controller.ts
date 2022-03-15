@@ -7,21 +7,27 @@ interface ParamRequest {
 
 @Controller('messages')
 export class MessagesController {
-  
   @Get()
   listMessages(): string {
     return 'Listing!';
   }
 
   @Post()
-  createMessage( @Body() { content }: CreateMessageDTO ): string {
+  createMessage(@Body() { content }: CreateMessageDTO): string {
     return JSON.stringify({
-      "message": content
+      message: content,
     });
   }
 
   @Get(':id')
-  getMessage(@Param('id') { id }:ParamRequest, @Query() { lastName }, @Body() { name }): string {
+  getMessage(
+    @Param('id')
+    { id }: ParamRequest,
+    @Query()
+    { lastName },
+    @Body()
+    { name },
+  ): string {
     return `Messages to ${id}: ${lastName}, ${name}`;
   }
 }
