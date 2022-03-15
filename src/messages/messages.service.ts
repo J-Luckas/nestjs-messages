@@ -7,15 +7,15 @@ export class MessagesService {
     this.messagesRepository = new MessagesRepository();
   }
 
-  async findOne(id: string) {
-    return await this.messagesRepository.findOne(id);
+  findOne(id: string) {
+    return this.messagesRepository.findOne(id);
   }
 
-  async findAll() {
-    return await this.messagesRepository.findAll();
+  findAll() {
+    return this.messagesRepository.findAll();
   }
 
-  async create(message: string) {
-    return await this.messagesRepository.create(message);
+  create(message: string) {
+    return this.messagesRepository.create(message);
   }
 }

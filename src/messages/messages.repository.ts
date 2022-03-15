@@ -11,7 +11,7 @@ export class MessagesRepository {
 
     const messages = JSON.parse(contents);
 
-    return messages.find((m: message) => m.id == id) || 'Message not found';
+    return messages.find((m: message) => m.id == id);
   }
 
   async findAll() {
